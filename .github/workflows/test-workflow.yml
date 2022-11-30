@@ -2,10 +2,10 @@ name: test-workflow
 on:
         push:
                 branches:
-                        dev-0.1
+                        - dev-0.1
 jobs:
         echo-test:
                 runs-on: windows-latest
                 steps:
-                        runs: echo "Hello World"
-                        runs: dir
+                        - runs: echo "Hello World"
+                        - runs: dir
