@@ -7,5 +7,5 @@ jobs:
         echo-test:
                 runs-on: windows-latest
                 steps:
-                        - runs: echo "Hello World"
-                        - runs: dir
+                        - run: echo "Hello World"
+                        - run: dir
