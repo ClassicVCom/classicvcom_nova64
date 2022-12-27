@@ -8,7 +8,8 @@
 
 void ClassicVCom_Nova64::Instruction::CommonExecuteCycles::Complete_ExecuteCycle(InstructionCallbackData &data)
 {
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 template <void (*callback)(ClassicVCom_Nova64::InstructionCallbackData &)>
@@ -55,12 +56,14 @@ void ClassicVCom_Nova64::Instruction::Interrupt::ExecuteCycle_5(InstructionCallb
 
 void ClassicVCom_Nova64::Instruction::InvalidInstructionType::ExecuteCycle(InstructionCallbackData &data)
 {
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::NoOperationInstruction::ExecuteCycle(InstructionCallbackData &data)
 {
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 /*
@@ -73,7 +76,8 @@ void ClassicVCom_Nova64::Instruction::SystemCall(ClassicVCom_Nova64::CPU &Curren
 
 void ClassicVCom_Nova64::Instruction::SystemCallInstruction::ExecuteCycle(InstructionCallbackData &data)
 {
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 /*
@@ -106,7 +110,8 @@ void ClassicVCom_Nova64::Instruction::InterruptReturnInstruction::ExecuteCycle_1
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -139,7 +144,8 @@ void ClassicVCom_Nova64::Instruction::InterruptReturnInstruction::ExecuteCycle_5
 	data.CurrentCPU.CurrentMotherboard->ChipsetEndOfInterrupt(irq.chipset, irq.interrupt);
 	data.CurrentCPU.irq_queue.pop_front();
 	data.CurrentCPU.SR &= ~(0x04);
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 /*
@@ -612,7 +618,8 @@ void ClassicVCom_Nova64::Instruction::PushInstruction::Base_ExecuteCycle(Instruc
 			uint8_t field_index = ((push_instruction_base.operand_control & GenerateFieldBitmask<uint16_t>(5, 4)) >> 5);
 			if (field_index > (0x7 >> data_size))
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 				break;
 			}
 			uint8_t &source_register = push_instruction_base.data[0];
@@ -814,7 +821,8 @@ void ClassicVCom_Nova64::Instruction::PushInstruction::Base_ExecuteCycle(Instruc
 						}
 						case 1:
 						{
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 2:
@@ -858,7 +866,8 @@ void ClassicVCom_Nova64::Instruction::PushInstruction::Base_ExecuteCycle(Instruc
 					{
 						if (!HasRegionFlagSupport<0x08>(data.CurrentCPU, bp_program_id, current_region_id))
 						{
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -917,7 +926,8 @@ void ClassicVCom_Nova64::Instruction::PushInstruction::Base_ExecuteCycle(Instruc
 					{
 						if (!HasRegionFlagSupport<0x08>(data.CurrentCPU, sp_program_id, current_region_id))
 						{
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -1047,7 +1057,8 @@ void ClassicVCom_Nova64::Instruction::PushInstruction::Absolute_Pointer_Chipset_
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -1485,7 +1496,8 @@ void ClassicVCom_Nova64::Instruction::PopInstruction::Base_ExecuteCycle(Instruct
 			if (field_index > (0x7 >> data_size))
 			{
 				data.CurrentCPU.data_bus = 0;
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 				break;
 			}
 			switch (data_size)
@@ -1557,7 +1569,8 @@ void ClassicVCom_Nova64::Instruction::PopInstruction::Base_ExecuteCycle(Instruct
 						}
 						case 1:
 						{
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 2:
@@ -1747,13 +1760,15 @@ void ClassicVCom_Nova64::Instruction::PopInstruction::Register_ExecuteCycle(Inst
 		}
 	}
 	data.CurrentCPU.data_bus = 0;
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::PopInstruction::DataDiscard_ExecuteCycle(InstructionCallbackData &data)
 {
 	data.CurrentCPU.data_bus = 0;
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 template <ClassicVCom_Nova64::DWordCompatible T>
@@ -1830,7 +1845,8 @@ void ClassicVCom_Nova64::Instruction::PopInstruction::Absolute_Pointer_Chipset_E
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -1863,7 +1879,8 @@ void ClassicVCom_Nova64::Instruction::PopInstruction::Base_Pointer_ExecuteCycle(
 	}
 	StoreDataToSystemMemory<T>(data.CurrentCPU, current_program_id, current_region_id, data.CurrentCPU.BP.address, offset_data, data.CurrentCPU.data_bus);
 	data.CurrentCPU.data_bus = 0;
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? CommonExecuteCycles::Dummy_ExecuteCycle<nullptr> : CommonExecuteCycles::Dummy_ExecuteCycle<ShadowFetchAndExecuteInstruction::ExecuteCycle_3>;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? CommonExecuteCycles::Dummy_ExecuteCycle<nullptr> : CommonExecuteCycles::Dummy_ExecuteCycle<ShadowFetchAndExecuteInstruction::ExecuteCycle_3>;
+	data.callback = nullptr;
 }
 
 template <ClassicVCom_Nova64::DWordCompatible T>
@@ -1895,7 +1912,8 @@ void ClassicVCom_Nova64::Instruction::PopInstruction::Stack_Pointer_ExecuteCycle
 	}
 	StoreDataToSystemMemory<T>(data.CurrentCPU, current_program_id, current_region_id, data.CurrentCPU.SP.address, offset_data, data.CurrentCPU.data_bus);
 	data.CurrentCPU.data_bus = 0;
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? CommonExecuteCycles::Dummy_ExecuteCycle<nullptr> : CommonExecuteCycles::Dummy_ExecuteCycle<ShadowFetchAndExecuteInstruction::ExecuteCycle_3>;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? CommonExecuteCycles::Dummy_ExecuteCycle<nullptr> : CommonExecuteCycles::Dummy_ExecuteCycle<ShadowFetchAndExecuteInstruction::ExecuteCycle_3>;
+	data.callback = nullptr;
 }
 
 /*
@@ -6588,31 +6606,36 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 								case 0x07:
 								{
 									GPRegisterToGPRegisterTransfer(data.CurrentCPU.GPR_Registers[operand_0_register], data.CurrentCPU.GPR_Registers[operand_1_register], data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x10:
 								{
 									IndexRegisterToGPRegisterTransfer(data.CurrentCPU.GPR_Registers[operand_0_register], data.CurrentCPU.SI, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x11:
 								{
 									IndexRegisterToGPRegisterTransfer(data.CurrentCPU.GPR_Registers[operand_0_register], data.CurrentCPU.DI, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x20:
 								{
 									MPRegisterToGPRegisterTransfer(data.CurrentCPU.GPR_Registers[operand_0_register], data.CurrentCPU.BP, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x21:
 								{
 									MPRegisterToGPRegisterTransfer(data.CurrentCPU.GPR_Registers[operand_0_register], data.CurrentCPU.SP, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 							}
@@ -6632,30 +6655,35 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 								case 0x07:
 								{
 									GPRegisterToIndexRegisterTransfer(data.CurrentCPU.SI, data.CurrentCPU.GPR_Registers[operand_1_register], data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x10:
 								{
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x11:
 								{
 									IndexRegisterToIndexRegisterTransfer(data.CurrentCPU.SI, data.CurrentCPU.DI, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x20:
 								{
 									MPRegisterToIndexRegisterTransfer(data.CurrentCPU.SI, data.CurrentCPU.BP, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x21:
 								{
 									MPRegisterToIndexRegisterTransfer(data.CurrentCPU.SI, data.CurrentCPU.SP, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 							}
@@ -6675,30 +6703,35 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 								case 0x07:
 								{
 									GPRegisterToIndexRegisterTransfer(data.CurrentCPU.DI, data.CurrentCPU.GPR_Registers[operand_1_register], data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x10:
 								{
 									IndexRegisterToIndexRegisterTransfer(data.CurrentCPU.DI, data.CurrentCPU.SI, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x11:
 								{
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x20:
 								{
 									MPRegisterToIndexRegisterTransfer(data.CurrentCPU.DI, data.CurrentCPU.BP, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x21:
 								{
 									MPRegisterToIndexRegisterTransfer(data.CurrentCPU.DI, data.CurrentCPU.SP, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 							}
@@ -6718,29 +6751,34 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 								case 0x07:
 								{
 									GPRegisterToMPRegisterTransfer(data.CurrentCPU.BP, data.CurrentCPU.GPR_Registers[operand_1_register], data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x10:
 								{
 									IndexRegisterToMPRegisterTransfer(data.CurrentCPU.BP, data.CurrentCPU.SI, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x11:
 								{
 									IndexRegisterToMPRegisterTransfer(data.CurrentCPU.BP, data.CurrentCPU.DI, data_size, operand_0_field_index, operand_1_field_index);
+									data.callback = nullptr;
 									break;
 								}
 								case 0x20:
 								{
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x21:
 								{
 									MPRegisterToMPRegisterTransfer(data.CurrentCPU.BP, data.CurrentCPU.SP, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 							}
@@ -6760,30 +6798,35 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 								case 0x07:
 								{
 									GPRegisterToMPRegisterTransfer(data.CurrentCPU.SP, data.CurrentCPU.GPR_Registers[operand_1_register], data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x10:
 								{
 									IndexRegisterToMPRegisterTransfer(data.CurrentCPU.SP, data.CurrentCPU.SI, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x11:
 								{
 									IndexRegisterToMPRegisterTransfer(data.CurrentCPU.SP, data.CurrentCPU.DI, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x20:
 								{
 									MPRegisterToMPRegisterTransfer(data.CurrentCPU.SP, data.CurrentCPU.BP, data_size, operand_0_field_index, operand_1_field_index);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 0x21:
 								{
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 							}
@@ -6797,33 +6840,251 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 					switch (operand_0_register)
 					{
 						case 0x00:
+						{
+							switch (data_size)
+							{
+								case 0:
+								{
+									ByteField &register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0x00]);
+									register_field[operand_0_field_index] = move_instruction_base.data[1];
+									data.callback = nullptr;
+									break;
+								}
+								case 1:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<Word_LE, WordField, 0x00>;
+									break;
+								}
+								case 2:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x00>;
+									break;
+								}
+								case 3:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = QWord_Immediate_Value_To_Register_ExecuteCycle;
+									break;
+								}
+							}
+							break;
+						}
 						case 0x01:
+						{
+							switch (data_size)
+							{
+								case 0:
+								{
+									ByteField &register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0x01]);
+									register_field[operand_0_field_index] = move_instruction_base.data[1];
+									data.callback = nullptr;
+									break;
+								}
+								case 1:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<Word_LE, WordField, 0x01>;
+									break;
+								}
+								case 2:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x01>;
+									break;
+								}
+								case 3:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = QWord_Immediate_Value_To_Register_ExecuteCycle;
+									break;
+								}
+							}
+							break;
+						}
 						case 0x02:
+						{
+							switch (data_size)
+							{
+								case 0:
+								{
+									ByteField &register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0x02]);
+									register_field[operand_0_field_index] = move_instruction_base.data[1];
+									data.callback = nullptr;
+									break;
+								}
+								case 1:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<Word_LE, WordField, 0x02>;
+									break;
+								}
+								case 2:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x02>;
+									break;
+								}
+								case 3:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = QWord_Immediate_Value_To_Register_ExecuteCycle;
+									break;
+								}
+							}
+							break;
+						}
 						case 0x03:
+						{
+							switch (data_size)
+							{
+								case 0:
+								{
+									ByteField &register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0x03]);
+									register_field[operand_0_field_index] = move_instruction_base.data[1];
+									data.callback = nullptr;
+									break;
+								}
+								case 1:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<Word_LE, WordField, 0x03>;
+									break;
+								}
+								case 2:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x03>;
+									break;
+								}
+								case 3:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = QWord_Immediate_Value_To_Register_ExecuteCycle;
+									break;
+								}
+							}
+							break;
+						}
 						case 0x04:
+						{
+							switch (data_size)
+							{
+								case 0:
+								{
+									ByteField &register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0x04]);
+									register_field[operand_0_field_index] = move_instruction_base.data[1];
+									data.callback = nullptr;
+									break;
+								}
+								case 1:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<Word_LE, WordField, 0x04>;
+									break;
+								}
+								case 2:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x04>;
+									break;
+								}
+								case 3:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = QWord_Immediate_Value_To_Register_ExecuteCycle;
+									break;
+								}
+							}
+							break;
+						}
 						case 0x05:
+						{
+							switch (data_size)
+							{
+								case 0:
+								{
+									ByteField &register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0x05]);
+									register_field[operand_0_field_index] = move_instruction_base.data[1];
+									data.callback = nullptr;
+									break;
+								}
+								case 1:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<Word_LE, WordField, 0x05>;
+									break;
+								}
+								case 2:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x05>;
+									break;
+								}
+								case 3:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = QWord_Immediate_Value_To_Register_ExecuteCycle;
+									break;
+								}
+							}
+							break;
+						}
 						case 0x06:
+						{
+							switch (data_size)
+							{
+								case 0:
+								{
+									ByteField &register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0x06]);
+									register_field[operand_0_field_index] = move_instruction_base.data[1];
+									data.callback = nullptr;
+									break;
+								}
+								case 1:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<Word_LE, WordField, 0x06>;
+									break;
+								}
+								case 2:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x06>;
+									break;
+								}
+								case 3:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = QWord_Immediate_Value_To_Register_ExecuteCycle;
+									break;
+								}
+							}
+							break;
+						}
 						case 0x07:
 						{
 							switch (data_size)
 							{
 								case 0:
 								{
-									ByteField &register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[operand_0_register]);
+									ByteField &register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0x07]);
 									register_field[operand_0_field_index] = move_instruction_base.data[1];
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 1:
 								{
 									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
-									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<Word_LE, WordField>;
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<Word_LE, WordField, 0x07>;
 									break;
 								}
 								case 2:
 								{
 									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
-									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField>;
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x07>;
 									break;
 								}
 								case 3:
@@ -6836,8 +7097,62 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 							break;
 						}
 						case 0x10:
+						{
+							switch (data_size)
+							{
+								case 2:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x10>;
+									break;
+								}
+								case 3:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = QWord_Immediate_Value_To_Register_ExecuteCycle;
+									break;
+								}
+							}
+							break;
+						}
 						case 0x11:
+						{
+							switch (data_size)
+							{
+								case 2:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x11>;
+									break;
+								}
+								case 3:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = QWord_Immediate_Value_To_Register_ExecuteCycle;
+									break;
+								}
+							}
+							break;
+						}
 						case 0x20:
+						{
+							switch (data_size)
+							{
+								case 2:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x20>;
+									break;
+								}
+								case 3:
+								{
+									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
+									data.callback = QWord_Immediate_Value_To_Register_ExecuteCycle;
+									break;
+								}
+							}
+							break;
+						}
 						case 0x21:
 						{
 							switch (data_size)
@@ -6845,7 +7160,7 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 								case 2:
 								{
 									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
-									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField>;
+									data.callback = Immediate_Value_To_Register_Field_ExecuteCycle<DWord_LE, DWordField, 0x21>;
 									break;
 								}
 								case 3:
@@ -6877,7 +7192,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 								}
 								case 1:
 								{
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 2:
@@ -7221,7 +7537,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 								}
 								case 1:
 								{
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 2:
@@ -7802,7 +8119,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 										}
 										case 1:
 										{
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 										case 2:
@@ -7891,7 +8209,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 										}
 										case 1:
 										{
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 										case 2:
@@ -7972,7 +8291,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 										}
 										case 1:
 										{
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 										case 2:
@@ -8063,7 +8383,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 										}
 										case 1:
 										{
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 										case 2:
@@ -8193,7 +8514,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 												}
 												case 1:
 												{
-													data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+													// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+													data.callback = nullptr;
 													break;
 												}
 												case 2:
@@ -8419,7 +8741,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 								}
 								case 1:
 								{
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 2:
@@ -8446,7 +8769,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 												}
 												case 1:
 												{
-													data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+													// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+													data.callback = nullptr;
 													break;
 												}
 												case 2:
@@ -8585,7 +8909,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 										}
 										case 1:
 										{
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 										case 2:
@@ -8637,7 +8962,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 											{
 												case 0:
 												{
-													data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+													// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+													data.callback = nullptr;
 													break;
 												}
 												case 1:
@@ -9033,7 +9359,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 										}
 										case 1:
 										{
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 										case 2:
@@ -9280,7 +9607,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 											{
 												case 0:
 												{
-													data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+													// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+													data.callback = nullptr;
 													break;
 												}
 												case 1:
@@ -9449,7 +9777,7 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Base_ExecuteCycle(Instruc
 	}
 }
 
-template <ClassicVCom_Nova64::WordMinimumRequired T, ClassicVCom_Nova64::QWordAlignmentRequired T2>
+template <ClassicVCom_Nova64::WordMinimumRequired T, ClassicVCom_Nova64::QWordAlignmentRequired T2, uint8_t operand_0_register>
 void ClassicVCom_Nova64::Instruction::MoveInstruction::Immediate_Value_To_Register_Field_ExecuteCycle(InstructionCallbackData &data)
 {
 	struct alignas(8) MoveInstructionImmediateValueToRegisterFieldData
@@ -9457,12 +9785,38 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Immediate_Value_To_Regist
 		Word_LE instruction_type;
 		Word_LE operand_control_0;
 		Word_LE operand_control_1;
-		uint8_t operand_0_register;
+		uint8_t operand_0_register_data;
 		uint8_t unused;
 		T immediate_value;
 	} &move_instruction_immediate_value_to_register_field = reinterpret_cast<MoveInstructionImmediateValueToRegisterFieldData &>(data.instruction_data[0]);
 	bool register_field_mode = (move_instruction_immediate_value_to_register_field.operand_control_0 & GenerateFieldBitmask<uint16_t>(4, 1));
 	uint8_t operand_0_field_index = register_field_mode ? operand_0_field_index = ((move_instruction_immediate_value_to_register_field.operand_control_0 & GenerateFieldBitmask<uint16_t>(5, 4)) >> 5) : 0;
+	if (operand_0_register >= 0x00 && operand_0_register <= 0x07)
+	{
+		T2 &register_field = reinterpret_cast<T2 &>(data.CurrentCPU.GPR_Registers[operand_0_register]);
+		register_field[operand_0_field_index] = move_instruction_immediate_value_to_register_field.immediate_value;
+	}
+	else if (operand_0_register == 0x10)
+	{
+		T2 &register_field = reinterpret_cast<T2 &>(data.CurrentCPU.SI);
+		register_field[operand_0_field_index] = move_instruction_immediate_value_to_register_field.immediate_value;
+	}
+	else if (operand_0_register == 0x11)
+	{
+		T2 &register_field = reinterpret_cast<T2 &>(data.CurrentCPU.DI);
+		register_field[operand_0_field_index] = move_instruction_immediate_value_to_register_field.immediate_value;
+	}
+	else if (operand_0_register == 0x20)
+	{
+		T2 &register_field = reinterpret_cast<T2 &>(data.CurrentCPU.BP);
+		register_field[operand_0_field_index] = move_instruction_immediate_value_to_register_field.immediate_value;
+	}
+	else if (operand_0_register == 0x21)
+	{
+		T2 &register_field = reinterpret_cast<T2 &>(data.CurrentCPU.SP);
+		register_field[operand_0_field_index] = move_instruction_immediate_value_to_register_field.immediate_value;
+	}
+	/*
 	switch (move_instruction_immediate_value_to_register_field.operand_0_register)
 	{
 		case 0x00:
@@ -9503,7 +9857,9 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Immediate_Value_To_Regist
 			break;
 		}
 	}
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	*/
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::MoveInstruction::QWord_Immediate_Value_To_Register_ExecuteCycle(InstructionCallbackData &data)
@@ -9552,7 +9908,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::QWord_Immediate_Value_To_
 			break;
 		}
 	}
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Self_To_Register_ExecuteCycle(InstructionCallbackData &data)
@@ -9699,7 +10056,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Pointer_Data_To_Register_
 		}
 	}
 	data.CurrentCPU.data_bus = 0;
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::MoveInstruction::QWord_Pointer_Data_To_Register_ExecuteCycle(InstructionCallbackData &data)
@@ -9747,7 +10105,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::QWord_Pointer_Data_To_Reg
 		}
 	}
 	data.CurrentCPU.data_bus = 0;
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_To_Register_ExecuteCycle(InstructionCallbackData &data)
@@ -9800,7 +10159,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -9814,7 +10174,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -9828,7 +10189,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -9842,7 +10204,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -10216,7 +10579,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Register_To_Absolute_Poin
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -10230,7 +10594,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Register_To_Absolute_Poin
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -10244,7 +10609,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Register_To_Absolute_Poin
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -10257,7 +10623,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Register_To_Absolute_Poin
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -10609,7 +10976,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Byte_Immediate_Value_To_A
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -10737,7 +11105,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Word_Immediate_Value_To_A
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -10775,7 +11144,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Immediate_Value_To_Absolu
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -11012,7 +11382,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -11225,7 +11596,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Pointer_Data_To_Absolute_
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -11273,7 +11645,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			{
 				data.current_data.pop_back();
 				data.current_data.pop_back();
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11289,7 +11662,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			{
 				data.current_data.pop_back();
 				data.current_data.pop_back();
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11305,7 +11679,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			{
 				data.current_data.pop_back();
 				data.current_data.pop_back();
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11321,7 +11696,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			{
 				data.current_data.pop_back();
 				data.current_data.pop_back();
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11796,7 +12172,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11810,7 +12187,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11824,7 +12202,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11838,7 +12217,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11885,7 +12265,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11899,7 +12280,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11913,7 +12295,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -11927,7 +12310,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -12443,7 +12827,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -12457,7 +12842,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -12471,7 +12857,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -12485,7 +12872,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -12532,7 +12920,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -12546,7 +12935,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -12560,7 +12950,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -12574,7 +12965,8 @@ void ClassicVCom_Nova64::Instruction::MoveInstruction::Absolute_Pointer_Chipset_
 			}
 			else
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			break;
 		}
@@ -14771,7 +15163,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 											ByteField &operand_0_register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[operand_0_register]);
 											ByteField &operand_1_register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[operand_1_register]);
 											SetConditionFlag<uint8_t, int8_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 										case 1:
@@ -14779,7 +15172,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 											WordField &operand_0_register_field = reinterpret_cast<WordField &>(data.CurrentCPU.GPR_Registers[operand_0_register]);
 											WordField &operand_1_register_field = reinterpret_cast<WordField &>(data.CurrentCPU.GPR_Registers[operand_1_register]);
 											SetConditionFlag<Word_LE, int16_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 										case 2:
@@ -14787,13 +15181,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_0_register]);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_1_register]);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 										case 3:
 										{
 											SetConditionFlag<QWord_LE, int64_t>(data.CurrentCPU.GPR_Registers[operand_0_register], data.CurrentCPU.GPR_Registers[operand_1_register], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -14807,13 +15203,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_0_register]);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -14827,13 +15225,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_0_register]);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -14847,13 +15247,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_0_register]);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -14867,13 +15269,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_0_register]);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -14901,13 +15305,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_1_register]);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -14923,7 +15329,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 											{
 												data.CurrentCPU.FL |= 0x20;
 											}
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -14937,13 +15344,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -14957,13 +15366,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -14977,13 +15388,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15011,13 +15424,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_1_register]);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15031,12 +15446,14 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15052,7 +15469,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 											{
 												data.CurrentCPU.FL |= 0x20;
 											}
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15066,13 +15484,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15086,13 +15506,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15120,13 +15542,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_1_register]);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15140,13 +15564,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15160,13 +15586,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 										}
 									}
 									break;
@@ -15181,7 +15609,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 											{
 												data.CurrentCPU.FL |= 0x20;
 											}
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15195,13 +15624,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15229,13 +15660,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_1_register]);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15249,13 +15682,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15269,13 +15704,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15289,13 +15726,15 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 										{
 											if (operand_0_field_index || operand_1_field_index)
 											{
-												data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+												data.callback = nullptr;
 												break;
 											}
 											DWordField &operand_0_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 											DWordField &operand_1_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 											SetConditionFlag<DWord_LE, int32_t>(operand_0_register_field[operand_0_field_index], operand_1_register_field[operand_1_field_index], data.CurrentCPU.FL, signed_mode);
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15311,7 +15750,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 											{
 												data.CurrentCPU.FL |= 0x20;
 											}
-											data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+											data.callback = nullptr;
 											break;
 										}
 									}
@@ -15342,7 +15782,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 								{
 									ByteField &operand_0_register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[operand_0_register]);
 									SetConditionFlag<uint8_t, int8_t>(operand_0_register_field[operand_0_field_index], compare_instruction_base.data[1], data.CurrentCPU.FL, signed_mode);
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 1:
@@ -15379,7 +15820,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 								{
 									if (operand_0_field_index)
 									{
-										data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+										// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+										data.callback = nullptr;
 										break;
 									}
 									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
@@ -15399,7 +15841,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 								{
 									if (operand_0_field_index)
 									{
-										data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+										// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+										data.callback = nullptr;
 										break;
 									}
 									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
@@ -15419,7 +15862,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 								{
 									if (operand_0_field_index)
 									{
-										data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+										// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+										data.callback = nullptr;
 										break;
 									}
 									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
@@ -15439,7 +15883,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 								{
 									if (operand_0_field_index)
 									{
-										data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+										// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+										data.callback = nullptr;
 										break;
 									}
 									data.instruction_data[1] = data.CurrentCPU.FastFetchExtraData<QWord_LE>();
@@ -15475,7 +15920,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 								}
 								case 1:
 								{
-									data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+									data.callback = nullptr;
 									break;
 								}
 								case 2:
@@ -15553,7 +15999,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15573,7 +16020,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15593,7 +16041,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15613,7 +16062,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15694,7 +16144,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15714,7 +16165,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15734,7 +16186,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15754,7 +16207,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15834,7 +16288,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15854,7 +16309,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15874,7 +16330,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15894,7 +16351,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15975,7 +16433,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -15995,7 +16454,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -16015,7 +16475,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -16035,7 +16496,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_ExecuteCycle(Inst
 												{
 													if (operand_0_field_index)
 													{
-														data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+														data.callback = nullptr;
 														break;
 													}
 													data.current_data.push_back(operand_0_field_index);
@@ -16122,7 +16584,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Immediate_Value_To_Reg
 			break;
 		}
 	}
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::CompareInstruction::QWord_Immediate_Value_To_Register_ExecuteCycle(InstructionCallbackData &data)
@@ -16153,7 +16616,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::QWord_Immediate_Value_
 			break;
 		}
 	}
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::CompareInstruction::Absolute_Pointer_Self_To_Register_ExecuteCycle(InstructionCallbackData &data)
@@ -16240,7 +16704,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Absolute_Pointer_Self_
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -16260,7 +16725,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Absolute_Pointer_Self_
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -16280,7 +16746,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Absolute_Pointer_Self_
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -16300,7 +16767,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Absolute_Pointer_Self_
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -16371,7 +16839,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Pointer_Data_To_Regist
 			break;
 		}
 	}
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::CompareInstruction::QWord_Pointer_Data_To_Register_ExecuteCycle(InstructionCallbackData &data)
@@ -16402,7 +16871,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::QWord_Pointer_Data_To_
 			break;
 		}
 	}
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::CompareInstruction::Absolute_Pointer_Chipset_To_Register_ExecuteCycle(InstructionCallbackData &data)
@@ -16461,7 +16931,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Absolute_Pointer_Chips
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -16477,7 +16948,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Absolute_Pointer_Chips
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -16493,7 +16965,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Absolute_Pointer_Chips
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -16508,7 +16981,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Absolute_Pointer_Chips
 					}
 					else
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					break;
 				}
@@ -16592,7 +17066,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_Pointer_Relative_
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -16612,7 +17087,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_Pointer_Relative_
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -16632,7 +17108,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_Pointer_Relative_
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -16652,7 +17129,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Base_Pointer_Relative_
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					data.current_data.push_back(operand_0_field_index);
 					data.current_data.push_back(signed_mode);
@@ -16740,7 +17218,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Stack_Pointer_Relative
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -16760,7 +17239,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Stack_Pointer_Relative
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -16780,7 +17260,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Stack_Pointer_Relative
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -16800,7 +17281,8 @@ void ClassicVCom_Nova64::Instruction::CompareInstruction::Stack_Pointer_Relative
 				{
 					if (operand_0_field_index)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					data.current_data.push_back(operand_0_field_index);
@@ -17206,7 +17688,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Base_ExecuteCycle(Instruc
 		{
 			if (!perform_jump)
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 				break;
 			}
 			uint8_t &source_register = jump_instruction_base.data[0];
@@ -17226,7 +17709,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Base_ExecuteCycle(Instruc
 					{
 						data.CurrentCPU.IP.address = operand_register_dword_field[0];
 						data.CurrentCPU.SR |= 0x01;
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 					}
 					else
 					{
@@ -17235,7 +17719,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Base_ExecuteCycle(Instruc
 						uint8_t new_region_id = (operand_register_byte_field[4] & 0xF);
 						if (!HasRegionFlagSupport<0x04>(data.CurrentCPU, current_program_id, new_region_id))
 						{
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 						}
 						else
 						{
@@ -17253,7 +17738,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Base_ExecuteCycle(Instruc
 		{
 			if (!perform_jump)
 			{
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 				break;
 			}
 			DWord_LE &operand_immediate_value = reinterpret_cast<DWord_LE &>(jump_instruction_base.data[0]);
@@ -17261,7 +17747,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Base_ExecuteCycle(Instruc
 			{
 				data.CurrentCPU.IP.address = operand_immediate_value;
 				data.CurrentCPU.SR |= 0x01;
-				data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+				data.callback = nullptr;
 			}
 			else
 			{
@@ -17269,7 +17756,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Base_ExecuteCycle(Instruc
 				uint8_t region_id = ((jump_instruction_base.operand_control & GenerateFieldBitmask<uint16_t>(8, 4)) >> 8);
 				if (!HasRegionFlagSupport<0x04>(data.CurrentCPU, current_program_id, region_id))
 				{
-					data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+					// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+					data.callback = nullptr;
 				}
 				else
 				{
@@ -17297,7 +17785,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Base_ExecuteCycle(Instruc
 				{
 					if (!perform_jump)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+						data.callback = nullptr;
 						break;
 					}
 					uint8_t offset_type = ((jump_instruction_base.operand_control & GenerateFieldBitmask<uint16_t>(8, 2)) >> 8);
@@ -17337,7 +17826,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Base_ExecuteCycle(Instruc
 				{
 					if (!perform_jump)
 					{
-						data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;;
+						// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;;
+						data.callback = nullptr;
 						break;
 					}
 					uint8_t offset_type = ((jump_instruction_base.operand_control & GenerateFieldBitmask<uint16_t>(8, 2)) >> 8);
@@ -17394,7 +17884,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Absolute_Pointer_Self_Exe
 	data.current_data.pop_back();
 	if (!perform_jump)
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 	else
 	{
@@ -17429,7 +17920,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Pointer_NoCrossRegion_Exe
 	data.CurrentCPU.IP.address = data.current_data.back();
 	data.current_data.pop_back();
 	data.CurrentCPU.SR |= 0x01;
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::JumpInstruction::Absolute_Pointer_Self_CrossRegion_ExecuteCycle_1(InstructionCallbackData &data)
@@ -17449,7 +17941,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Absolute_Pointer_Self_Cro
 	if (!HasRegionFlagSupport<0x04>(data.CurrentCPU, current_program_id, new_region_id))
 	{
 		data.current_data.pop_back();
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 	else
 	{
@@ -17477,7 +17970,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::Pointer_Register_CrossReg
 	uint8_t new_region_id = data.current_data.back();
 	if (!HasRegionFlagSupport<0x04>(data.CurrentCPU, current_program_id, new_region_id))
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 	else
 	{
@@ -17498,7 +17992,8 @@ void ClassicVCom_Nova64::Instruction::JumpInstruction::CrossRegion_ExecuteCycle(
 	SetProgramRegion(data.CurrentCPU.IP, data.current_data.back());
 	data.current_data.pop_back();
 	data.CurrentCPU.SR |= 0x03;
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 /*
@@ -18093,7 +18588,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Base_ExecuteCycle(Instruct
 							ByteField &accumulator_register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0]);
 							ByteField &operand_register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[operand_register]);
 							PerformAddition<uint8_t, int8_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, carry_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 1:
@@ -18101,7 +18597,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Base_ExecuteCycle(Instruct
 							WordField &accumulator_register_field = reinterpret_cast<WordField &>(data.CurrentCPU.GPR_Registers[0]);
 							WordField &operand_register_field = reinterpret_cast<WordField &>(data.CurrentCPU.GPR_Registers[operand_register]);
 							PerformAddition<Word_LE, int16_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, carry_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 2:
@@ -18109,13 +18606,15 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Base_ExecuteCycle(Instruct
 							DWordField &accumulator_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[0]);
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_register]);
 							PerformAddition<DWord_LE, int32_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, carry_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 3:
 						{
 							PerformAddition<QWord_LE, int64_t>(data.CurrentCPU.GPR_Registers[0], data.CurrentCPU.GPR_Registers[operand_register], data.CurrentCPU.FL, signed_mode, carry_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -18129,13 +18628,15 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Base_ExecuteCycle(Instruct
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &accumulator_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[0]);
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 							PerformAddition<DWord_LE, int32_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, carry_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -18149,13 +18650,15 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Base_ExecuteCycle(Instruct
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &accumulator_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[0]);
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 							PerformAddition<DWord_LE, int32_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, carry_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -18169,13 +18672,15 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Base_ExecuteCycle(Instruct
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &accumulator_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[0]);
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 							PerformAddition<DWord_LE, int32_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, carry_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -18189,13 +18694,15 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Base_ExecuteCycle(Instruct
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &accumulator_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[0]);
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 							PerformAddition<DWord_LE, int32_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, carry_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -18220,7 +18727,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Base_ExecuteCycle(Instruct
 				{
 					ByteField &accumulator_register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0]);
 					PerformAddition<uint8_t, int8_t>(accumulator_register_field[accumulator_field_index], add_instruction_base.data[0], data.CurrentCPU.FL, signed_mode, carry_mode);
-					data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+					// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+					data.callback = nullptr;
 					break;
 				}
 				case 1:
@@ -18228,7 +18736,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Base_ExecuteCycle(Instruct
 					WordField &accumulator_register_field = reinterpret_cast<WordField &>(data.CurrentCPU.GPR_Registers[0]);
 					Word_LE &immediate_value = reinterpret_cast<Word_LE &>(add_instruction_base.data[0]);
 					PerformAddition<Word_LE, int16_t>(accumulator_register_field[accumulator_field_index], immediate_value, data.CurrentCPU.FL, signed_mode, carry_mode);
-					data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+					// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+					data.callback = nullptr;
 					break;
 				}
 				case 2:
@@ -18289,7 +18798,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Base_ExecuteCycle(Instruct
 						}
 						case 1:
 						{
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 2:
@@ -18557,7 +19067,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Immediate_Value_To_Accumul
 	}
 	T3 &accumulator_register_field = reinterpret_cast<T3 &>(data.CurrentCPU.GPR_Registers[0]);
 	PerformAddition<T, T2>(accumulator_register_field[accumulator_field_index], add_instruction_immediate_value_to_accumulator_field.immediate_value, data.CurrentCPU.FL, signed_mode, carry_mode);
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::AddInstruction::Immediate_Value_To_Accumulator_ExecuteCycle(InstructionCallbackData &data)
@@ -18573,7 +19084,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Immediate_Value_To_Accumul
 	bool signed_mode = (add_instruction_immediate_value_to_accumulator.operand_control_0 & GenerateFieldBitmask<uint16_t>(6, 1));
 	bool carry_mode = (add_instruction_immediate_value_to_accumulator.operand_control_0 & GenerateFieldBitmask<uint16_t>(7, 1));
 	PerformAddition<QWord_LE, int64_t>(data.CurrentCPU.GPR_Registers[0], add_instruction_immediate_value_to_accumulator.immediate_value, data.CurrentCPU.FL, signed_mode, carry_mode);
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 template <ClassicVCom_Nova64::DWordMaximumRequired T, std::signed_integral T2, ClassicVCom_Nova64::QWordAlignmentRequired T3>
@@ -18625,7 +19137,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Pointer_Data_To_Accumulato
 	}
 	T3 &accumulator_register_field = reinterpret_cast<T3 &>(data.CurrentCPU.GPR_Registers[0]);
 	PerformAddition<T, T2>(accumulator_register_field[accumulator_field_index], value, data.CurrentCPU.FL, signed_mode, carry_mode);
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::AddInstruction::Absolute_Pointer_Self_To_Accumulator_ExecuteCycle(InstructionCallbackData &data)
@@ -18668,7 +19181,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Pointer_Data_To_Accumulato
 	bool signed_mode = (add_instruction_pointer_data_to_accumulator.operand_control_0 & GenerateFieldBitmask<uint16_t>(6, 1));
 	bool carry_mode = (add_instruction_pointer_data_to_accumulator.operand_control_0 & GenerateFieldBitmask<uint16_t>(7, 1));
 	PerformAddition<QWord_LE, int64_t>(data.CurrentCPU.GPR_Registers[0], value, data.CurrentCPU.FL, signed_mode, carry_mode);
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 template <ClassicVCom_Nova64::DWordMaximumRequired T, std::signed_integral T2, ClassicVCom_Nova64::QWordAlignmentRequired T3>
@@ -18703,7 +19217,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Absolute_Pointer_Chipset_T
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -18738,7 +19253,8 @@ void ClassicVCom_Nova64::Instruction::AddInstruction::Absolute_Pointer_Chipset_T
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -18848,7 +19364,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Base_ExecuteCycle(Ins
 							ByteField &accumulator_register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0]);
 							ByteField &operand_register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[operand_register]);
 							PerformSubtraction<uint8_t, int8_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, borrow_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 1:
@@ -18856,7 +19373,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Base_ExecuteCycle(Ins
 							WordField &accumulator_register_field = reinterpret_cast<WordField &>(data.CurrentCPU.GPR_Registers[0]);
 							WordField &operand_register_field = reinterpret_cast<WordField &>(data.CurrentCPU.GPR_Registers[operand_register]);
 							PerformSubtraction<Word_LE, int16_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, borrow_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 2:
@@ -18864,13 +19382,15 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Base_ExecuteCycle(Ins
 							DWordField &accumulator_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[0]);
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_register]);
 							PerformSubtraction<DWord_LE, int32_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, borrow_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 3:
 						{
 							PerformSubtraction<QWord_LE, int64_t>(data.CurrentCPU.GPR_Registers[0], data.CurrentCPU.GPR_Registers[operand_register], data.CurrentCPU.FL, signed_mode, borrow_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -18884,13 +19404,15 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Base_ExecuteCycle(Ins
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &accumulator_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[0]);
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 							PerformSubtraction<DWord_LE, int32_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, borrow_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -18904,13 +19426,15 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Base_ExecuteCycle(Ins
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &accumulator_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[0]);
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 							PerformSubtraction<DWord_LE, int32_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, borrow_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -18924,13 +19448,15 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Base_ExecuteCycle(Ins
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &accumulator_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[0]);
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 							PerformSubtraction<DWord_LE, int32_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, borrow_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -18944,12 +19470,14 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Base_ExecuteCycle(Ins
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 							}
 							DWordField &accumulator_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[0]);
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 							PerformSubtraction<DWord_LE, int32_t>(accumulator_register_field[accumulator_field_index], operand_register_field[operand_field_index], data.CurrentCPU.FL, signed_mode, borrow_mode);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -18974,7 +19502,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Base_ExecuteCycle(Ins
 				{
 					ByteField &accumulator_register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[0]);
 					PerformSubtraction<uint8_t, int8_t>(accumulator_register_field[accumulator_field_index], subtract_instruction_base.data[0], data.CurrentCPU.FL, signed_mode, borrow_mode);
-					data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+					// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+					data.callback = nullptr;
 					break;
 				}
 				case 1:
@@ -18982,7 +19511,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Base_ExecuteCycle(Ins
 					WordField &accumulator_register_field = reinterpret_cast<WordField &>(data.CurrentCPU.GPR_Registers[0]);
 					Word_LE &immediate_value = reinterpret_cast<Word_LE &>(subtract_instruction_base.data[0]);
 					PerformSubtraction<Word_LE, int16_t>(accumulator_register_field[accumulator_field_index], immediate_value, data.CurrentCPU.FL, signed_mode, borrow_mode);
-					data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+					// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+					data.callback = nullptr;
 					break;
 				}
 				case 2:
@@ -19043,7 +19573,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Base_ExecuteCycle(Ins
 						}
 						case 1:
 						{
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 2:
@@ -19307,7 +19838,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Immediate_Value_To_Ac
 	uint8_t accumulator_field_index = register_field_mode ? ((subtract_instruction_immediate_value_to_accumulator_field.operand_control_0 & GenerateFieldBitmask<uint16_t>(8, 4)) >> 8) : 0;
 	T3 &accumulator_register_field = reinterpret_cast<T3 &>(data.CurrentCPU.GPR_Registers[0]);
 	PerformSubtraction<T, T2>(accumulator_register_field[accumulator_field_index], subtract_instruction_immediate_value_to_accumulator_field.immediate_value, data.CurrentCPU.FL, signed_mode, borrow_mode);
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::SubtractInstruction::Immediate_Value_To_Accumulator_ExecuteCycle(InstructionCallbackData &data)
@@ -19323,7 +19855,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Immediate_Value_To_Ac
 	bool signed_mode = (subtract_instruction_immediate_value_to_accumulator.operand_control_0 & GenerateFieldBitmask<uint16_t>(6, 1));
 	bool borrow_mode = (subtract_instruction_immediate_value_to_accumulator.operand_control_0 & GenerateFieldBitmask<uint16_t>(7, 1));
 	PerformSubtraction<QWord_LE, int64_t>(data.CurrentCPU.GPR_Registers[0], subtract_instruction_immediate_value_to_accumulator.immediate_value, data.CurrentCPU.FL, signed_mode, borrow_mode);
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 template <ClassicVCom_Nova64::DWordMaximumRequired T, std::signed_integral T2, ClassicVCom_Nova64::QWordAlignmentRequired T3>
@@ -19371,7 +19904,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Pointer_Data_To_Accum
 	uint8_t accumulator_field_index = register_field_mode ? ((subtract_instruction_pointer_data_to_accumulator_field.operand_control_0 & GenerateFieldBitmask<uint16_t>(8, 4)) >> 8) : 0;
 	T3 &accumulator_register_field = reinterpret_cast<T3 &>(data.CurrentCPU.GPR_Registers[0]);
 	PerformSubtraction<T, T2>(accumulator_register_field[accumulator_field_index], value, data.CurrentCPU.FL, signed_mode, borrow_mode);
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 void ClassicVCom_Nova64::Instruction::SubtractInstruction::Absolute_Pointer_Self_To_Accumulator_ExecuteCycle(InstructionCallbackData &data)
@@ -19413,7 +19947,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Pointer_Data_To_Accum
 	bool signed_mode = (subtract_instruction_pointer_data_to_accumulator.operand_control_0 & GenerateFieldBitmask<uint16_t>(6, 1));
 	bool borrow_mode = (subtract_instruction_pointer_data_to_accumulator.operand_control_0 & GenerateFieldBitmask<uint16_t>(7, 1));
 	PerformSubtraction<QWord_LE, int64_t>(data.CurrentCPU.GPR_Registers[0], value, data.CurrentCPU.FL, signed_mode, borrow_mode);
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 template <ClassicVCom_Nova64::DWordMaximumRequired T, std::signed_integral T2, ClassicVCom_Nova64::QWordAlignmentRequired T3>
@@ -19448,7 +19983,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Absolute_Pointer_Chip
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -19483,7 +20019,8 @@ void ClassicVCom_Nova64::Instruction::SubtractInstruction::Absolute_Pointer_Chip
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -20215,23 +20752,27 @@ void ClassicVCom_Nova64::Instruction::IncrementDecrementInstruction::Base_Execut
 						{
 							ByteField &operand_register_field = reinterpret_cast<ByteField &>(data.CurrentCPU.GPR_Registers[operand_register]);
 							IncrementDecrementValue<uint8_t>(operand_register_field[operand_field_index], data.CurrentCPU.FL, inc_dec_control);
+							data.callback = nullptr;
 							break;
 						}
 						case 1:
 						{
 							WordField &operand_register_field = reinterpret_cast<WordField &>(data.CurrentCPU.GPR_Registers[operand_register]);
 							IncrementDecrementValue<Word_LE>(operand_register_field[operand_field_index], data.CurrentCPU.FL, inc_dec_control);
+							data.callback = nullptr;
 							break;
 						}
 						case 2:
 						{
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.GPR_Registers[operand_register]);
 							IncrementDecrementValue<DWord_LE>(operand_register_field[operand_field_index], data.CurrentCPU.FL, inc_dec_control);
+							data.callback = nullptr;
 							break;
 						}
 						case 3:
 						{
 							IncrementDecrementValue<QWord_LE>(data.CurrentCPU.GPR_Registers[operand_register], data.CurrentCPU.FL, inc_dec_control);
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -20245,12 +20786,14 @@ void ClassicVCom_Nova64::Instruction::IncrementDecrementInstruction::Base_Execut
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SI);
 							IncrementDecrementValue<DWord_LE>(operand_register_field[operand_field_index], data.CurrentCPU.FL, inc_dec_control);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -20264,12 +20807,14 @@ void ClassicVCom_Nova64::Instruction::IncrementDecrementInstruction::Base_Execut
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.DI);
 							IncrementDecrementValue<DWord_LE>(operand_register_field[operand_field_index], data.CurrentCPU.FL, inc_dec_control);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -20283,12 +20828,14 @@ void ClassicVCom_Nova64::Instruction::IncrementDecrementInstruction::Base_Execut
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.BP);
 							IncrementDecrementValue<DWord_LE>(operand_register_field[operand_field_index], data.CurrentCPU.FL, inc_dec_control);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -20302,12 +20849,14 @@ void ClassicVCom_Nova64::Instruction::IncrementDecrementInstruction::Base_Execut
 						{
 							if (operand_field_index)
 							{
-								data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+								data.callback = nullptr;
 								break;
 							}
 							DWordField &operand_register_field = reinterpret_cast<DWordField &>(data.CurrentCPU.SP);
 							IncrementDecrementValue<DWord_LE>(operand_register_field[operand_field_index], data.CurrentCPU.FL, inc_dec_control);
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 					}
@@ -20357,7 +20906,8 @@ void ClassicVCom_Nova64::Instruction::IncrementDecrementInstruction::Base_Execut
 						}
 						case 1:
 						{
-							data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+							data.callback = nullptr;
 							break;
 						}
 						case 2:
@@ -20710,7 +21260,8 @@ void ClassicVCom_Nova64::Instruction::IncrementDecrementInstruction::Absolute_Po
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -20761,7 +21312,8 @@ void ClassicVCom_Nova64::Instruction::IncrementDecrementInstruction::Absolute_Po
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -20917,7 +21469,8 @@ void ClassicVCom_Nova64::Instruction::SetClearInstruction::Flags1_ExecuteCycle(I
 	}
 	else
 	{
-		data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+		data.callback = nullptr;
 	}
 }
 
@@ -20940,7 +21493,8 @@ void ClassicVCom_Nova64::Instruction::SetClearInstruction::Flags2_ExecuteCycle(I
 	{
 		data.CurrentCPU.FL &= ~(static_cast<QWord_LE>(set_clear_flags2_instruction.flags_2) << 32);
 	}
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? nullptr : ShadowFetchAndExecuteInstruction::ExecuteCycle_3;
+	data.callback = nullptr;
 }
 
 /*
@@ -20999,9 +21553,11 @@ void ClassicVCom_Nova64::Instruction::ChipCallInstruction::ExecuteCycle(Instruct
 			break;
 		}
 	}
-	data.callback = !(data.CurrentCPU.SR & 0x08) ? CommonExecuteCycles::Dummy_ExecuteCycle<nullptr> : CommonExecuteCycles::Dummy_ExecuteCycle<ShadowFetchAndExecuteInstruction::ExecuteCycle_3>;
+	// data.callback = !(data.CurrentCPU.SR & 0x08) ? CommonExecuteCycles::Dummy_ExecuteCycle<nullptr> : CommonExecuteCycles::Dummy_ExecuteCycle<ShadowFetchAndExecuteInstruction::ExecuteCycle_3>;
+	data.callback = CommonExecuteCycles::Dummy_ExecuteCycle<nullptr>;
 }
 
+/*
 void ClassicVCom_Nova64::Instruction::ShadowFetchAndExecuteInstruction::ExecuteCycle_1(InstructionCallbackData &data)
 {
 	struct alignas(8) ShadowFetchAndExecuteInstructionData
@@ -21066,3 +21622,4 @@ void ClassicVCom_Nova64::Instruction::ShadowFetchAndExecuteInstruction::ExecuteC
 	}
 	data.callback = nullptr;
 }
+*/

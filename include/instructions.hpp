@@ -33,7 +33,7 @@ namespace ClassicVCom_Nova64
 		Or = 0x0047,
 		SetClear = 0x00D0,
 		ChipCall = 0x00F0,
-		ShadowFetchAndExecute = 0x0100
+		// ShadowFetchAndExecute = 0x0100
 	};
 
 	struct alignas(8) BaseInstructionData
@@ -223,7 +223,7 @@ namespace ClassicVCom_Nova64
 		namespace MoveInstruction
 		{
 			void Base_ExecuteCycle(InstructionCallbackData &data);
-			template <WordMinimumRequired T, QWordAlignmentRequired T2>
+			template <WordMinimumRequired T, QWordAlignmentRequired T2, uint8_t operand_0_register>
 			void Immediate_Value_To_Register_Field_ExecuteCycle(InstructionCallbackData &data);
 			void QWord_Immediate_Value_To_Register_ExecuteCycle(InstructionCallbackData &data);
 			void Absolute_Pointer_Self_To_Register_ExecuteCycle(InstructionCallbackData &data);
@@ -469,12 +469,14 @@ namespace ClassicVCom_Nova64
 
 		// inline void ShadowFetchAndExecute(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
 
+		/*
 		namespace ShadowFetchAndExecuteInstruction
 		{
 			void ExecuteCycle_1(InstructionCallbackData &data);
 			void ExecuteCycle_2(InstructionCallbackData &data);
 			void ExecuteCycle_3(InstructionCallbackData &data);
 		}
+		*/
 	}
 }
 

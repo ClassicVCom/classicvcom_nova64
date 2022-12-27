@@ -326,7 +326,7 @@ namespace ClassicVCom_Nova64
 			// friend void Instruction::Move(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
 
 			friend void Instruction::MoveInstruction::Base_ExecuteCycle(InstructionCallbackData &data);
-			template <WordMinimumRequired T, QWordAlignmentRequired T2>
+			template <WordMinimumRequired T, QWordAlignmentRequired T2, uint8_t operand_0_register>
 			friend void Instruction::MoveInstruction::Immediate_Value_To_Register_Field_ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::MoveInstruction::QWord_Immediate_Value_To_Register_ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::MoveInstruction::Absolute_Pointer_Self_To_Register_ExecuteCycle(InstructionCallbackData &data);
@@ -548,9 +548,11 @@ namespace ClassicVCom_Nova64
 
 			// friend inline void Instruction::ShadowFetchAndExecute(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
 
+			/*
 			friend void Instruction::ShadowFetchAndExecuteInstruction::ExecuteCycle_1(InstructionCallbackData &data);
 			friend void Instruction::ShadowFetchAndExecuteInstruction::ExecuteCycle_2(InstructionCallbackData &data);
 			friend void Instruction::ShadowFetchAndExecuteInstruction::ExecuteCycle_3(InstructionCallbackData &data);
+			*/
 			
 			friend Kernel;
 		private:
