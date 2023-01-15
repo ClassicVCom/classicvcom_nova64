@@ -101,6 +101,13 @@ namespace ClassicVCom_Nova64
 		DWord_LE memory_control;
 	};
 
+	struct alignas(8) CPUVersionData
+	{
+		Word_LE major;
+		Word_LE minor;
+		Word_LE patch;
+	};
+
 	enum class IndexRegisterType
 	{
 		None, Source, Destination
@@ -215,7 +222,8 @@ namespace ClassicVCom_Nova64
 				return running;
 			}
 
-			inline bool IssueInterruptRequest(uint8_t chipset, uint8_t interrupt)
+			template <uint8_t chipset, uint8_t interrupt>
+			inline bool IssueInterruptRequest()
 			{
 				if (FL & 0x100)
 				{
@@ -282,12 +290,8 @@ namespace ClassicVCom_Nova64
 			friend void Instruction::InvalidInstructionType::ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::NoOperationInstruction::ExecuteCycle(InstructionCallbackData &data);
 			
-			// friend void Instruction::SystemCall(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-			
 			friend void Instruction::SystemCallInstruction::ExecuteCycle(InstructionCallbackData &data);
 
-			// friend void Instruction::InterruptReturn(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-			
 			friend void Instruction::InterruptReturnInstruction::ExecuteCycle_1(InstructionCallbackData &data);
 			friend void Instruction::InterruptReturnInstruction::ExecuteCycle_2(InstructionCallbackData &data);
 			friend void Instruction::InterruptReturnInstruction::ExecuteCycle_3(InstructionCallbackData &data);
@@ -303,8 +307,6 @@ namespace ClassicVCom_Nova64
 			friend void Instruction::PushInstruction::Absolute_Pointer_Self_ExecuteCycle(InstructionCallbackData &data);
 			template <DWordCompatible T>
 			friend void Instruction::PushInstruction::Absolute_Pointer_Chipset_ExecuteCycle(InstructionCallbackData &data);
-
-			// friend void Instruction::Pop(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
 
 			friend void Instruction::PopInstruction::Base_ExecuteCycle(InstructionCallbackData &data);
 			template <DWordCompatible T, bool is_byte, bool is_word, bool is_dword, bool is_qword>
@@ -323,10 +325,8 @@ namespace ClassicVCom_Nova64
 			template <DWordCompatible T>
 			friend void Instruction::PopInstruction::Stack_Pointer_ExecuteCycle(InstructionCallbackData &data);
 
-			// friend void Instruction::Move(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-
 			friend void Instruction::MoveInstruction::Base_ExecuteCycle(InstructionCallbackData &data);
-			template <WordMinimumRequired T, QWordAlignmentRequired T2, uint8_t operand_0_register>
+			template <WordMinimumRequired T, QWordAlignmentRequired T2, uint8_t operand_0_register, uint8_t operand_0_field_index>
 			friend void Instruction::MoveInstruction::Immediate_Value_To_Register_Field_ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::MoveInstruction::QWord_Immediate_Value_To_Register_ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::MoveInstruction::Absolute_Pointer_Self_To_Register_ExecuteCycle(InstructionCallbackData &data);
@@ -437,8 +437,6 @@ namespace ClassicVCom_Nova64
 			friend void Instruction::MoveInstruction::Stack_Pointer_Relative_Offset_To_Stack_Pointer_Relative_Offset_ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::MoveInstruction::Stack_Pointer_Source_Index_Register_Offset_To_Stack_Pointer_Relative_Offset_ExecuteCycle(InstructionCallbackData &data);
 
-			// friend void Instruction::Compare(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-			
 			friend void Instruction::CompareInstruction::Base_ExecuteCycle(InstructionCallbackData &data);
 			template <WordMinimumRequired T, std::signed_integral T2, QWordAlignmentRequired T3>
 			friend void Instruction::CompareInstruction::Immediate_Value_To_Register_Field_ExecuteCycle(InstructionCallbackData &data);
@@ -451,8 +449,6 @@ namespace ClassicVCom_Nova64
 			friend void Instruction::CompareInstruction::Base_Pointer_Relative_Offset_To_Register_ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::CompareInstruction::Stack_Pointer_Relative_Offset_To_Register_ExecuteCycle(InstructionCallbackData &data);
 
-			// friend inline void Instruction::Jump(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-
 			friend void Instruction::JumpInstruction::Base_ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::JumpInstruction::Absolute_Pointer_Self_ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::JumpInstruction::Pointer_NoCrossRegion_ExecuteCycle(InstructionCallbackData &data);
@@ -461,11 +457,6 @@ namespace ClassicVCom_Nova64
 			friend void Instruction::JumpInstruction::Pointer_Register_CrossRegion_ExecuteCycle_1(InstructionCallbackData &data);
 			friend void Instruction::JumpInstruction::Pointer_Register_CrossRegion_ExecuteCycle_2(InstructionCallbackData &data);
 			friend void Instruction::JumpInstruction::CrossRegion_ExecuteCycle(InstructionCallbackData &data);
-
-			// friend void Instruction::Add(CPU &CurrentCPU, BaseInstructionData &instruction_data);
-			// friend void Instruction::Subtract(CPU &CurrentCPU, BaseInstructionData &instruction_data);
-			// friend void Instruction::AddSubtract<&PerformAddition<uint8_t, int8_t>, &PerformAddition<Word_LE, int16_t>, &PerformAddition<DWord_LE, int32_t>, &PerformAddition<QWord_LE, int64_t>>(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-			// friend void Instruction::AddSubtract<&PerformSubtraction<uint8_t, int8_t>, &PerformSubtraction<Word_LE, int16_t>, &PerformSubtraction<DWord_LE, int32_t>, &PerformSubtraction<QWord_LE, int64_t>>(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
 
 			friend void Instruction::AddInstruction::Base_ExecuteCycle(InstructionCallbackData &data);
 			template <DWordMinimumRequired T, std::signed_integral T2, QWordAlignmentRequired T3>
@@ -507,8 +498,6 @@ namespace ClassicVCom_Nova64
 			friend void Instruction::SubtractInstruction::Stack_Pointer_Relative_Offset_To_Accumulator_Field_ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::SubtractInstruction::Stack_Pointer_Relative_Offset_To_Accumulator_ExecuteCycle(InstructionCallbackData &data);
 
-			// friend void Instruction::IncrementDecrement(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-
 			friend void Instruction::IncrementDecrementInstruction::Base_ExecuteCycle(InstructionCallbackData &data);
 			template <DWordCompatible T>
 			friend void Instruction::IncrementDecrementInstruction::Absolute_Pointer_Self_ExecuteCycle_1(InstructionCallbackData &data);
@@ -537,12 +526,10 @@ namespace ClassicVCom_Nova64
 			template <DWordCompatible T>
 			friend void Instruction::IncrementDecrementInstruction::Stack_Pointer_Destination_Index_Register_Offset_ExecuteCycle(InstructionCallbackData &data);
 			
-			// friend inline void Instruction::SetClear(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-			
 			friend void Instruction::SetClearInstruction::Flags1_ExecuteCycle(InstructionCallbackData &data);
 			friend void Instruction::SetClearInstruction::Flags2_ExecuteCycle(InstructionCallbackData &data);
-			
-			// friend inline void Instruction::ChipCall(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
+
+			friend void Instruction::CPUIDInstruction::ExecuteCycle(InstructionCallbackData &data);			
 
 			friend void Instruction::ChipCallInstruction::ExecuteCycle(InstructionCallbackData &data);
 
@@ -580,6 +567,7 @@ namespace ClassicVCom_Nova64
 			Motherboard *CurrentMotherboard;
 			std::vector<Program> ProgramVectorTable;
 			std::deque<ChipsetInterruptRequestData> irq_queue;
+			const CPUVersionData version = { 0, 1, 0 };
 			// const InstructionFunctionTableArray instruction_function_table;
 			const InstructionBaseCallbackTableArray instruction_base_callback_table;
 	};

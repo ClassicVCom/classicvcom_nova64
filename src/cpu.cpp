@@ -53,6 +53,7 @@ consteval ClassicVCom_Nova64::InstructionBaseCallbackTableArray ClassicVCom_Nova
 	table[static_cast<uint16_t>(InstructionType::Subtract)] = { Instruction::SubtractInstruction::Base_ExecuteCycle, "Fetched a Subtract Instruction" };
 	table[static_cast<uint16_t>(InstructionType::IncrementDecrement)] = { Instruction::IncrementDecrementInstruction::Base_ExecuteCycle, "Fetched an Increment/Decrement Instruction" };
 	table[static_cast<uint16_t>(InstructionType::SetClear)] = { Instruction::SetClearInstruction::Flags1_ExecuteCycle, "Fetched a Set/Clear Instruction" };
+	table[static_cast<uint16_t>(InstructionType::CPUID)] = { Instruction::CPUIDInstruction::ExecuteCycle, "Fetched a CPUID Instruction" };
 	table[static_cast<uint16_t>(InstructionType::ChipCall)] = { Instruction::ChipCallInstruction::ExecuteCycle, "Fetched a Virtual Chipset Function Call Instruction" };
 	// table[static_cast<uint16_t>(InstructionType::ShadowFetchAndExecute)] = { Instruction::ShadowFetchAndExecuteInstruction::ExecuteCycle_1, "Fetched a Shadow Fetch and Execute Instruction" };
 	return table;

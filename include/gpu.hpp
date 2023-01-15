@@ -15,8 +15,8 @@ namespace ClassicVCom_Nova64
 	{
 		ClearScreen = 0,
 		InitializeFontModules = 18,
-		GenerateDefaultPaletteTable = 32,
-		CommitPaletteTableChanges = 33
+		GenerateDefaultColorIndexTable = 32,
+		CommitColorIndexTableChanges = 33
 	};
 
 	struct alignas(8) GraphicsModeControlData
@@ -30,10 +30,10 @@ namespace ClassicVCom_Nova64
 	struct alignas(8) FramebufferControlRegisterData
 	{
 		uint8_t clear_color_index;
-		uint8_t clear_color_palette_table;
+		uint8_t clear_color_index_table;
 	};
 
-	struct PaletteTableEntryData
+	struct ColorIndexTableEntryData
 	{
 		uint8_t red;
 		uint8_t green;
@@ -46,17 +46,17 @@ namespace ClassicVCom_Nova64
 		uint8_t offset;
 	};
 
-	using PaletteTableData = std::array<PaletteTableEntryData, 256>;
+	using ColorIndexTableData = std::array<ColorIndexTableEntryData, 256>;
 
-	consteval PaletteTableData GenerateDefaultPaletteTable(uint8_t color_mode, ColorMaskControlData red_mask, ColorMaskControlData green_mask, ColorMaskControlData blue_mask)
+	consteval ColorIndexTableData GenerateDefaultColorIndexTable(uint8_t color_mode, ColorMaskControlData red_mask, ColorMaskControlData green_mask, ColorMaskControlData blue_mask)
 	{
-		PaletteTableData palette_table;
+		ColorIndexTableData color_index_table;
 		uint16_t colors_available = (1 << (color_mode + 1));
 		if (color_mode < 7)
 		{
-			for (size_t i = colors_available; i < palette_table.size(); ++i)
+			for (size_t i = colors_available; i < color_index_table.size(); ++i)
 			{
-				palette_table[i] = { 0, 0, 0 };
+				color_index_table[i] = { 0, 0, 0 };
 			}
 		}
 		for (uint16_t i = 0; i < colors_available; ++i)
@@ -64,11 +64,11 @@ namespace ClassicVCom_Nova64
 			float red = static_cast<float>((i & red_mask.mask) >> red_mask.offset) / static_cast<float>(red_mask.mask >> red_mask.offset);
 			float green = static_cast<float>((i & green_mask.mask) >> green_mask.offset) / static_cast<float>(green_mask.mask >> green_mask.offset);
 			float blue = static_cast<float>((i & blue_mask.mask) >> blue_mask.offset) / static_cast<float>(blue_mask.mask >> blue_mask.offset);
-			palette_table[i].red = static_cast<uint8_t>(red * 255.0f);
-			palette_table[i].green = static_cast<uint8_t>(green * 255.0f);
-			palette_table[i].blue = static_cast<uint8_t>(blue * 255.0f);
+			color_index_table[i].red = static_cast<uint8_t>(red * 255.0f);
+			color_index_table[i].green = static_cast<uint8_t>(green * 255.0f);
+			color_index_table[i].blue = static_cast<uint8_t>(blue * 255.0f);
 		}
-		return palette_table;
+		return color_index_table;
 	}
 
 	class GPU;
@@ -166,15 +166,15 @@ namespace ClassicVCom_Nova64
 					case 8:
 					{
 						DWord_LE current_address = address + static_cast<int>(offset_data.offset);
-						uint8_t palette_table_index = group - 1;
-						const PaletteTableData &current_palette_table = PaletteTable[palette_table_index];
-						if (current_address + sizeof(T) - 1 >= (current_palette_table.size() * sizeof(PaletteTableEntryData)))
+						uint8_t color_index_table_index = group - 1;
+						const ColorIndexTableData &current_color_index_table = ColorIndexTable[color_index_table_index];
+						if (current_address + sizeof(T) - 1 >= (current_color_index_table.size() * sizeof(ColorIndexTableEntryData)))
 						{
 							read_return = ChipsetReturnCode::MemoryGroupReadFailed;
 							break;
 						}
-						const uint8_t *current_palette_table_data = reinterpret_cast<const uint8_t *>(current_palette_table.data());
-						memcpy(&result, &current_palette_table_data[current_address], sizeof(T));
+						const uint8_t *current_color_index_table_data = reinterpret_cast<const uint8_t *>(current_color_index_table.data());
+						memcpy(&result, &current_color_index_table_data[current_address], sizeof(T));
 						read_return = ChipsetReturnCode::MemoryGroupReadSuccessful;
 						break;
 					}
@@ -287,7 +287,7 @@ namespace ClassicVCom_Nova64
 										if (Registers.framebuffer_control.clear_color_index >= (1 << (Registers.graphics_mode_control.color_mode + 1)))
 										{
 											Registers.framebuffer_control.clear_color_index = 0;
-											CurrentRenderer->UpdateFramebufferControl(Registers.framebuffer_control.clear_color_index, Registers.framebuffer_control.clear_color_palette_table);
+											CurrentRenderer->UpdateFramebufferControl(Registers.framebuffer_control.clear_color_index, Registers.framebuffer_control.clear_color_index_table);
 										}
 										for (size_t i = 0; i < FontModules.size(); ++i)
 										{
@@ -321,11 +321,11 @@ namespace ClassicVCom_Nova64
 								{
 									Registers.framebuffer_control.clear_color_index = 0;
 								}
-								if (Registers.framebuffer_control.clear_color_palette_table > 7)
+								if (Registers.framebuffer_control.clear_color_index_table > 7)
 								{
-									Registers.framebuffer_control.clear_color_palette_table = 7;
+									Registers.framebuffer_control.clear_color_index_table = 7;
 								}
-								CurrentRenderer->UpdateFramebufferControl(Registers.framebuffer_control.clear_color_index, Registers.framebuffer_control.clear_color_palette_table);
+								CurrentRenderer->UpdateFramebufferControl(Registers.framebuffer_control.clear_color_index, Registers.framebuffer_control.clear_color_index_table);
 								break;
 							}
 							default:
@@ -346,15 +346,15 @@ namespace ClassicVCom_Nova64
 					case 8:
 					{
 						DWord_LE current_address = address + static_cast<int>(offset_data.offset);
-						uint8_t palette_table_index = group - 1;
-						PaletteTableData &current_palette_table = PaletteTable[palette_table_index];
-						if (current_address + sizeof(T) - 1 >= (current_palette_table.size() * sizeof(PaletteTableEntryData)))
+						uint8_t color_index_table_index = group - 1;
+						ColorIndexTableData &current_color_index_table = ColorIndexTable[color_index_table_index];
+						if (current_address + sizeof(T) - 1 >= (current_color_index_table.size() * sizeof(ColorIndexTableEntryData)))
 						{
 							write_return = ChipsetReturnCode::MemoryGroupWriteFailed;
 							break;
 						}
-						uint8_t *current_palette_table_data = reinterpret_cast<uint8_t *>(current_palette_table.data());
-						memcpy(&current_palette_table_data[current_address], &data, sizeof(T));
+						uint8_t *current_color_index_table_data = reinterpret_cast<uint8_t *>(current_color_index_table.data());
+						memcpy(&current_color_index_table_data[current_address], &data, sizeof(T));
 						write_return = ChipsetReturnCode::MemoryGroupWriteSuccessful;
 						break;
 					}
@@ -409,7 +409,7 @@ namespace ClassicVCom_Nova64
 				CurrentRenderer = renderer;
 			}
 
-			void CopyPaletteTableToRenderer(uint8_t index);
+			void CopyColorIndexTableToRenderer(uint8_t index);
 
 			template <HasChipsetId T>
 			friend std::string GetId(T &chipset);
@@ -420,7 +420,7 @@ namespace ClassicVCom_Nova64
 				GraphicsModeControlData graphics_mode_control;
 				FramebufferControlRegisterData framebuffer_control;
 			} Registers;
-			std::array<PaletteTableData, 8> PaletteTable;
+			std::array<ColorIndexTableData, 8> ColorIndexTable;
 			std::array<FontModule, 16> FontModules;
 			std::vector<uint8_t> direct_drawing_surface;
 			Renderer *CurrentRenderer;

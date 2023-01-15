@@ -32,6 +32,7 @@ namespace ClassicVCom_Nova64
 		RotateLeftRight = 0x0046,
 		Or = 0x0047,
 		SetClear = 0x00D0,
+		CPUID = 0x00D1,
 		ChipCall = 0x00F0,
 		// ShadowFetchAndExecute = 0x0100
 	};
@@ -142,9 +143,6 @@ namespace ClassicVCom_Nova64
 			void Dummy_ExecuteCycle(InstructionCallbackData &data);
 		}
 
-		// inline void InvalidInstruction(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-		// inline void NoOperation(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-		
 		namespace Interrupt
 		{
 			void ExecuteCycle_1(InstructionCallbackData &data);
@@ -164,14 +162,10 @@ namespace ClassicVCom_Nova64
 			void ExecuteCycle(InstructionCallbackData &data);
 		}
 
-		// void SystemCall(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-
 		namespace SystemCallInstruction
 		{
 			void ExecuteCycle(InstructionCallbackData &data);
 		}
-
-		// void InterruptReturn(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
 
 		namespace InterruptReturnInstruction
 		{
@@ -182,8 +176,6 @@ namespace ClassicVCom_Nova64
 			void ExecuteCycle_5(InstructionCallbackData &data);
 		}
 		
-		// void Push(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-
 		namespace PushInstruction
 		{
 			void Base_ExecuteCycle(InstructionCallbackData &data);
@@ -195,8 +187,6 @@ namespace ClassicVCom_Nova64
 			template <DWordCompatible T>
 			void Absolute_Pointer_Chipset_ExecuteCycle(InstructionCallbackData &data);
 		}
-
-		// void Pop(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
 
 		namespace PopInstruction
 		{
@@ -218,12 +208,10 @@ namespace ClassicVCom_Nova64
 			void Stack_Pointer_ExecuteCycle(InstructionCallbackData &data);
 		}
 
-		// void Move(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-
 		namespace MoveInstruction
 		{
 			void Base_ExecuteCycle(InstructionCallbackData &data);
-			template <WordMinimumRequired T, QWordAlignmentRequired T2, uint8_t operand_0_register>
+			template <WordMinimumRequired T, QWordAlignmentRequired T2, uint8_t operand_0_register, uint8_t operand_0_field_index>
 			void Immediate_Value_To_Register_Field_ExecuteCycle(InstructionCallbackData &data);
 			void QWord_Immediate_Value_To_Register_ExecuteCycle(InstructionCallbackData &data);
 			void Absolute_Pointer_Self_To_Register_ExecuteCycle(InstructionCallbackData &data);
@@ -335,8 +323,6 @@ namespace ClassicVCom_Nova64
 			void Stack_Pointer_Source_Index_Register_Offset_To_Stack_Pointer_Relative_Offset_ExecuteCycle(InstructionCallbackData &data);
 		}
 
-		// void Compare(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-		
 		namespace CompareInstruction
 		{
 			void Base_ExecuteCycle(InstructionCallbackData &data);
@@ -352,8 +338,6 @@ namespace ClassicVCom_Nova64
 			void Stack_Pointer_Relative_Offset_To_Register_ExecuteCycle(InstructionCallbackData &data);
 		}
 
-		// inline void Jump(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-
 		namespace JumpInstruction
 		{
 			void Base_ExecuteCycle(InstructionCallbackData &data);
@@ -365,13 +349,6 @@ namespace ClassicVCom_Nova64
 			void Pointer_Register_CrossRegion_ExecuteCycle_2(InstructionCallbackData &data);
 			void CrossRegion_ExecuteCycle(InstructionCallbackData &data);
 		}
-
-		// void Add(CPU &CurrentCPU, BaseInstructionData &instruction_data);
-		// void Subtract(CPU &CurrentCPU, BaseInstructionData &instruction_data);
-		/*
-		template <void (*ArithmeticFuncByte)(uint8_t &, uint8_t &, QWord_LE &, bool, bool), void (*ArithmeticFuncWord)(Word_LE &, Word_LE &, QWord_LE &, bool, bool), void (*ArithmeticFuncDWord)(DWord_LE &, DWord_LE &, QWord_LE &, bool, bool), void (*ArithmeticFuncQWord)(QWord_LE &, QWord_LE &, QWord_LE &, bool, bool)>
-		void AddSubtract(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-		*/
 
 		namespace AddInstruction
 		{
@@ -419,8 +396,6 @@ namespace ClassicVCom_Nova64
 			void Stack_Pointer_Relative_Offset_To_Accumulator_ExecuteCycle(InstructionCallbackData &data);
 		}
 
-		// void IncrementDecrement(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-
 		namespace IncrementDecrementInstruction
 		{
 			void Base_ExecuteCycle(InstructionCallbackData &data);
@@ -452,15 +427,16 @@ namespace ClassicVCom_Nova64
 			void Stack_Pointer_Destination_Index_Register_Offset_ExecuteCycle(InstructionCallbackData &data);
 		}
 
-		// inline void SetClear(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
-
 		namespace SetClearInstruction
 		{
 			void Flags1_ExecuteCycle(InstructionCallbackData &data);
 			void Flags2_ExecuteCycle(InstructionCallbackData &data);
 		}
 
-		// inline void ChipCall(CPU &CurrentCPU, BaseInstructionData &instruction_data, uint32_t &cycles_processed);
+		namespace CPUIDInstruction
+		{
+			void ExecuteCycle(InstructionCallbackData &data);
+		}
 
 		namespace ChipCallInstruction
 		{

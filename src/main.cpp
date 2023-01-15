@@ -71,7 +71,7 @@ void ClassicVCom_Nova64::Application::RunMainLoop()
 						ChipsetInterruptDescriptorTableEntryData idt_entry = GetInterrupt(*MainInput, 0x00);
 						if (idt_entry.ISR_control.interrupt_flags & 0x01)
 						{
-							MainCPU->IssueInterruptRequest(0x03, 0x00);
+							MainCPU->IssueInterruptRequest<0x03, 0x00>();
 						}
 					}
 					break;
@@ -84,7 +84,7 @@ void ClassicVCom_Nova64::Application::RunMainLoop()
 						ChipsetInterruptDescriptorTableEntryData idt_entry = GetInterrupt(*MainInput, 0x00);
 						if (idt_entry.ISR_control.interrupt_flags & 0x01)
 						{
-							MainCPU->IssueInterruptRequest(0x03, 0x00);
+							MainCPU->IssueInterruptRequest<0x03, 0x00>();
 						}
 					}
 					break;
@@ -100,7 +100,7 @@ void ClassicVCom_Nova64::Application::RunMainLoop()
 						ChipsetInterruptDescriptorTableEntryData idt_entry = GetInterrupt(*MainInput, 0x01);
 						if (idt_entry.ISR_control.interrupt_flags & 0x01)
 						{
-							MainCPU->IssueInterruptRequest(0x03, 0x01);
+							MainCPU->IssueInterruptRequest<0x03, 0x01>();
 						}
 					}
 					break;
@@ -116,7 +116,7 @@ void ClassicVCom_Nova64::Application::RunMainLoop()
 						ChipsetInterruptDescriptorTableEntryData idt_entry = GetInterrupt(*MainInput, 0x01);
 						if (idt_entry.ISR_control.interrupt_flags & 0x01)
 						{
-							MainCPU->IssueInterruptRequest(0x03, 0x01);
+							MainCPU->IssueInterruptRequest<0x03, 0x01>();
 						}
 					}
 					break;
@@ -132,7 +132,7 @@ void ClassicVCom_Nova64::Application::RunMainLoop()
 						ChipsetInterruptDescriptorTableEntryData idt_entry = GetInterrupt(*MainInput, 0x01);
 						if (idt_entry.ISR_control.interrupt_flags & 0x01)
 						{
-							MainCPU->IssueInterruptRequest(0x03, 0x01);
+							MainCPU->IssueInterruptRequest<0x03, 0x01>();
 						}
 					}
 					break;
@@ -148,7 +148,7 @@ void ClassicVCom_Nova64::Application::RunMainLoop()
 						ChipsetInterruptDescriptorTableEntryData idt_entry = GetInterrupt(*MainInput, 0x01);
 						if (idt_entry.ISR_control.interrupt_flags & 0x01)
 						{
-							MainCPU->IssueInterruptRequest(0x03, 0x01);
+							MainCPU->IssueInterruptRequest<0x03, 0x01>();
 						}
 					}
 					break;

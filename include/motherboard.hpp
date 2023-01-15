@@ -27,7 +27,7 @@ namespace ClassicVCom_Nova64
 			inline void SetupGPU(Renderer *renderer)
 			{
 				MainGPU.LinkWithRenderer(renderer);
-				MainGPU.CopyPaletteTableToRenderer(0);
+				MainGPU.CopyColorIndexTableToRenderer(0);
 			}
 			
 			inline CPU *GetCPU()
@@ -134,7 +134,49 @@ namespace ClassicVCom_Nova64
 					}
 					case 0x04:
 					{
-						MainTimer.EndOfInterrupt(interrupt);
+						switch (interrupt)
+						{
+							case 0x00:
+							{
+								MainTimer.EndOfInterrupt<0x00>();
+								break;
+							}
+							case 0x01:
+							{
+								MainTimer.EndOfInterrupt<0x01>();
+								break;
+							}
+							case 0x02:
+							{
+								MainTimer.EndOfInterrupt<0x02>();
+								break;
+							}
+							case 0x03:
+							{
+								MainTimer.EndOfInterrupt<0x03>();
+								break;
+							}
+							case 0x04:
+							{
+								MainTimer.EndOfInterrupt<0x04>();
+								break;
+							}
+							case 0x05:
+							{
+								MainTimer.EndOfInterrupt<0x05>();
+								break;
+							}
+							case 0x06:
+							{
+								MainTimer.EndOfInterrupt<0x06>();
+								break;
+							}
+							case 0x07:
+							{
+								MainTimer.EndOfInterrupt<0x07>();
+								break;
+							}
+						}
 						break;
 					}
 				}

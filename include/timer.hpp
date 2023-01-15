@@ -818,37 +818,26 @@ namespace ClassicVCom_Nova64
 				}
 			}
 
-			inline void EndOfInterrupt(uint8_t interrupt)
+			template <uint8_t interrupt>
+			inline void EndOfInterrupt()
 			{
-				switch (interrupt)
+				if (interrupt >= 0x00 && interrupt <= 0x07)
 				{
-					case 0x00:
-					case 0x01:
-					case 0x02:
-					case 0x03:
-					case 0x04:
-					case 0x05:
-					case 0x06:
-					case 0x07:
+					constexpr uint8_t current_timer_pair = interrupt % 4;
+					constexpr uint8_t current_timer_index = interrupt / 4;
+					if (!(Registers.timer_rtc_flags & (0x10000 << current_timer_pair)))
 					{
-						uint8_t current_timer = interrupt;
-						uint8_t current_timer_pair = current_timer % 4;
-						uint8_t current_timer_index = current_timer / 4;
-						if (!(Registers.timer_rtc_flags & (0x10000 << current_timer_pair)))
-						{
-							Registers.timer_counter[current_timer_pair] = Registers.timer_start[current_timer_pair];
-						}
-						else
-						{
-							Timer32BitModeData &timer_start = reinterpret_cast<Timer32BitModeData &>(Registers.timer_start[current_timer_pair]);
-							Timer32BitModeData &timer_counter = reinterpret_cast<Timer32BitModeData &>(Registers.timer_counter[current_timer_pair]);
-							timer_counter[current_timer_index] = timer_start[current_timer_index];
-						}
-						if (Registers.timer_rtc_flags & (0x100 << current_timer))
-						{
-							Registers.timer_rtc_flags |= (0x01 << current_timer);
-						}
-						break;
+						Registers.timer_counter[current_timer_pair] = Registers.timer_start[current_timer_pair];
+					}
+					else
+					{
+						Timer32BitModeData &timer_start = reinterpret_cast<Timer32BitModeData &>(Registers.timer_start[current_timer_pair]);
+						Timer32BitModeData &timer_counter = reinterpret_cast<Timer32BitModeData &>(Registers.timer_counter[current_timer_pair]);
+						timer_counter[current_timer_index] = timer_start[current_timer_index];
+					}
+					if (Registers.timer_rtc_flags & (0x100 << interrupt))
+					{
+						Registers.timer_rtc_flags |= (0x01 << interrupt);
 					}
 				}
 			}
@@ -881,7 +870,7 @@ namespace ClassicVCom_Nova64
 								if (idt_entry.ISR_control.interrupt_flags & (0x01 << timer))
 								{
 									Registers.timer_rtc_flags &= ~(0x01 << timer);
-									cpu.IssueInterruptRequest(0x04, timer);
+									cpu.IssueInterruptRequest<0x04, timer>();
 								}
 								else
 								{

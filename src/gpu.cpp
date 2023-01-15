@@ -7,7 +7,7 @@ ClassicVCom_Nova64::GPU::GPU() : CurrentRenderer(nullptr), direct_drawing_surfac
 {
 	Registers.graphics_mode_control = { 1280, 720, 7, 0x00 };
 	Registers.framebuffer_control = { 0, 0 };
-	PaletteTable[0] = GenerateDefaultPaletteTable(7, { GenerateFieldBitmask<uint8_t>(5, 3), 5 }, { GenerateFieldBitmask<uint8_t>(2, 3), 2 }, { GenerateFieldBitmask<uint8_t>(0, 2), 0 });
+	ColorIndexTable[0] = GenerateDefaultColorIndexTable(7, { GenerateFieldBitmask<uint8_t>(5, 3), 5 }, { GenerateFieldBitmask<uint8_t>(2, 3), 2 }, { GenerateFieldBitmask<uint8_t>(0, 2), 0 });
 }
 
 ClassicVCom_Nova64::GPU::~GPU()
@@ -31,89 +31,89 @@ void ClassicVCom_Nova64::GPU::operator()(Word_LE &function, std::array<QWord_LE,
 			}
 			break;
 		}
-		case GPUChipsetFunction::GenerateDefaultPaletteTable:
+		case GPUChipsetFunction::GenerateDefaultColorIndexTable:
 		{
 			struct alignas(8) OperandControl
 			{
-				uint8_t palette_table;
+				uint8_t color_index_table;
 			} operand_control = std::bit_cast<OperandControl>(args[0]);
-			if (operand_control.palette_table < 8)
+			if (operand_control.color_index_table < 8)
 			{
 				switch (Registers.graphics_mode_control.color_mode)
 				{
 					case 0:
 					{
-						PaletteTable[operand_control.palette_table] = GenerateDefaultPaletteTable(0, { 0x01, 0 }, { 0x01, 0 }, { 0x01, 0 });
+						ColorIndexTable[operand_control.color_index_table] = GenerateDefaultColorIndexTable(0, { 0x01, 0 }, { 0x01, 0 }, { 0x01, 0 });
 						break;
 					}
 					case 1:
 					{
-						PaletteTable[operand_control.palette_table] = GenerateDefaultPaletteTable(1, { 0x03, 0 }, { 0x03, 0 }, { 0x03, 0 });
+						ColorIndexTable[operand_control.color_index_table] = GenerateDefaultColorIndexTable(1, { 0x03, 0 }, { 0x03, 0 }, { 0x03, 0 });
 						break;
 					}
 					case 2:
 					{
-						PaletteTable[operand_control.palette_table] = GenerateDefaultPaletteTable(2, { GenerateFieldBitmask<uint8_t>(2, 1), 2 }, { GenerateFieldBitmask<uint8_t>(1, 1), 1 }, { GenerateFieldBitmask<uint8_t>(0, 1), 0 });
+						ColorIndexTable[operand_control.color_index_table] = GenerateDefaultColorIndexTable(2, { GenerateFieldBitmask<uint8_t>(2, 1), 2 }, { GenerateFieldBitmask<uint8_t>(1, 1), 1 }, { GenerateFieldBitmask<uint8_t>(0, 1), 0 });
 						break;
 					}
 					case 3:
 					{
-						PaletteTable[operand_control.palette_table] = GenerateDefaultPaletteTable(3, { GenerateFieldBitmask<uint8_t>(2, 2), 2 }, { GenerateFieldBitmask<uint8_t>(1, 1), 1 }, { GenerateFieldBitmask<uint8_t>(0, 1), 0 });
+						ColorIndexTable[operand_control.color_index_table] = GenerateDefaultColorIndexTable(3, { GenerateFieldBitmask<uint8_t>(2, 2), 2 }, { GenerateFieldBitmask<uint8_t>(1, 1), 1 }, { GenerateFieldBitmask<uint8_t>(0, 1), 0 });
 						break;
 					}
 					case 4:
 					{
-						PaletteTable[operand_control.palette_table] = GenerateDefaultPaletteTable(4, { GenerateFieldBitmask<uint8_t>(3, 2), 3 }, { GenerateFieldBitmask<uint8_t>(1, 2), 1 }, { GenerateFieldBitmask<uint8_t>(0, 1), 0 });
+						ColorIndexTable[operand_control.color_index_table] = GenerateDefaultColorIndexTable(4, { GenerateFieldBitmask<uint8_t>(3, 2), 3 }, { GenerateFieldBitmask<uint8_t>(1, 2), 1 }, { GenerateFieldBitmask<uint8_t>(0, 1), 0 });
 						break;
 					}
 					case 5:
 					{
-						PaletteTable[operand_control.palette_table] = GenerateDefaultPaletteTable(5, { GenerateFieldBitmask<uint8_t>(4, 2), 4 }, { GenerateFieldBitmask<uint8_t>(2, 2), 2 }, { GenerateFieldBitmask<uint8_t>(0, 2), 0 });
+						ColorIndexTable[operand_control.color_index_table] = GenerateDefaultColorIndexTable(5, { GenerateFieldBitmask<uint8_t>(4, 2), 4 }, { GenerateFieldBitmask<uint8_t>(2, 2), 2 }, { GenerateFieldBitmask<uint8_t>(0, 2), 0 });
 						break;
 					}
 					case 6:
 					{
-						PaletteTable[operand_control.palette_table] = GenerateDefaultPaletteTable(6, { GenerateFieldBitmask<uint8_t>(4, 3), 4 }, { GenerateFieldBitmask<uint8_t>(2, 2), 2 }, { GenerateFieldBitmask<uint8_t>(0, 2), 0 });
+						ColorIndexTable[operand_control.color_index_table] = GenerateDefaultColorIndexTable(6, { GenerateFieldBitmask<uint8_t>(4, 3), 4 }, { GenerateFieldBitmask<uint8_t>(2, 2), 2 }, { GenerateFieldBitmask<uint8_t>(0, 2), 0 });
 						break;
 					}
 					case 7:
 					{
-						PaletteTable[operand_control.palette_table] = GenerateDefaultPaletteTable(7, { GenerateFieldBitmask<uint8_t>(5, 3), 5 }, { GenerateFieldBitmask<uint8_t>(2, 3), 2 }, { GenerateFieldBitmask<uint8_t>(0, 2), 0 });
+						ColorIndexTable[operand_control.color_index_table] = GenerateDefaultColorIndexTable(7, { GenerateFieldBitmask<uint8_t>(5, 3), 5 }, { GenerateFieldBitmask<uint8_t>(2, 3), 2 }, { GenerateFieldBitmask<uint8_t>(0, 2), 0 });
 						break;
 					}
 				}
-				CopyPaletteTableToRenderer(operand_control.palette_table);
+				CopyColorIndexTableToRenderer(operand_control.color_index_table);
 			}
 			break;
 		}
-		case GPUChipsetFunction::CommitPaletteTableChanges:
+		case GPUChipsetFunction::CommitColorIndexTableChanges:
 		{
 			struct alignas(8) OperandControl
 			{
-				uint8_t palette_table;
+				uint8_t color_index_table;
 			} operand_control = std::bit_cast<OperandControl>(args[0]);
-			CopyPaletteTableToRenderer(operand_control.palette_table);
+			CopyColorIndexTableToRenderer(operand_control.color_index_table);
 			break;
 		}
 	}
 }
 
-void ClassicVCom_Nova64::GPU::CopyPaletteTableToRenderer(uint8_t index)
+void ClassicVCom_Nova64::GPU::CopyColorIndexTableToRenderer(uint8_t index)
 {
 	if (index < 8)
 	{
-		PaletteTableBufferData data;
-		PaletteTableData &CurrentPaletteTable = PaletteTable[index];
-		for (size_t i = 0; i < CurrentPaletteTable.size(); ++i)
+		ColorIndexTableBufferData data;
+		ColorIndexTableData &CurrentColorIndexTable = ColorIndexTable[index];
+		for (size_t i = 0; i < CurrentColorIndexTable.size(); ++i)
 		{
-			data[i].red = static_cast<float>(CurrentPaletteTable[i].red) / 255.0f;
-			data[i].green = static_cast<float>(CurrentPaletteTable[i].green) / 255.0f;
-			data[i].blue = static_cast<float>(CurrentPaletteTable[i].blue) / 255.0f;
+			data[i].red = static_cast<float>(CurrentColorIndexTable[i].red) / 255.0f;
+			data[i].green = static_cast<float>(CurrentColorIndexTable[i].green) / 255.0f;
+			data[i].blue = static_cast<float>(CurrentColorIndexTable[i].blue) / 255.0f;
 			data[i].alpha = 1.0f;
 		}
 		if (CurrentRenderer != nullptr)
 		{
-			CurrentRenderer->UpdatePaletteTableBuffer(index, data);
+			CurrentRenderer->UpdateColorIndexTableBuffer(index, data);
 		}
 	}
 }

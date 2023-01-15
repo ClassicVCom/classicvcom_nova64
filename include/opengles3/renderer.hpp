@@ -15,7 +15,7 @@ namespace ClassicVCom_Nova64
 		std::array<float, 2> tex;
 	};
 
-	struct PaletteData
+	struct ColorIndexData
 	{
 		float red;
 		float green;
@@ -23,7 +23,7 @@ namespace ClassicVCom_Nova64
 		float alpha;
 	};
 
-	using PaletteTableBufferData = std::array<PaletteData, 256>;
+	using ColorIndexTableBufferData = std::array<ColorIndexData, 256>;
 
 	enum class ScalingType
 	{
@@ -32,13 +32,13 @@ namespace ClassicVCom_Nova64
 
 	struct GraphicsControlBufferData
 	{
-		std::array<PaletteTableBufferData, 8> palette_table_buffer;
+		std::array<ColorIndexTableBufferData, 8> color_index_table_buffer;
 	};
 
 	struct FramebufferControlData
 	{
 		uint32_t clear_color_index;
-		uint32_t clear_color_palette_table;
+		uint32_t clear_color_index_table;
 	};
 
 	const RendererType renderer_type = RendererType::OpenGLES_3;
@@ -51,8 +51,8 @@ namespace ClassicVCom_Nova64
 			bool Setup(SDL_Window &Window);
 			void SetVSync(bool toggle);
 			void SetResolution(uint16_t width, uint16_t height);
-			void UpdatePaletteTableBuffer(uint8_t index, const PaletteTableBufferData &data);
-			void UpdateFramebufferControl(uint8_t clear_color_index, uint8_t clear_color_palette_table);
+			void UpdateColorIndexTableBuffer(uint8_t index, const ColorIndexTableBufferData &data);
+			void UpdateFramebufferControl(uint8_t clear_color_index, uint8_t clear_color_index_table);
 			void ClearMainFramebuffer();
 			void Render(SDL_Window &Window);
 			const char *GetRendererError() const;

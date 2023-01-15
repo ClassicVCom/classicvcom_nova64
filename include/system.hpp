@@ -9,6 +9,7 @@
 namespace ClassicVCom_Nova64
 {
 	template <QWordCompatible T>
+	[[gnu::always_inline]]
 	inline void PushDataToStack(CPU &cpu, T data)
 	{
 		ProgramMemoryControlData current_program_memory_control = GetProgramMemoryControlData(cpu.SP);
@@ -47,6 +48,7 @@ namespace ClassicVCom_Nova64
 	}
 
 	template <QWordCompatible T>
+	[[gnu::always_inline]]
 	inline T PopDataFromStack(CPU &cpu)
 	{
 		T data = 0;
@@ -87,6 +89,7 @@ namespace ClassicVCom_Nova64
 	}
 
 	template <QWordCompatible T>
+	[[gnu::always_inline]]
 	inline T LoadDataFromSystemMemory(CPU &cpu, Word_LE program_id, uint8_t region_id, DWord_LE address, OffsetData offset_data)
 	{
 		T data = 0;
@@ -138,6 +141,7 @@ namespace ClassicVCom_Nova64
 	}
 
 	template <QWordCompatible T>
+	[[gnu::always_inline]]
 	inline void StoreDataToSystemMemory(CPU &cpu, Word_LE program_id, uint8_t region_id, DWord_LE address, OffsetData offset_data, T data)
 	{
 		Program &CurrentProgram = cpu.ProgramVectorTable[program_id];
@@ -186,6 +190,7 @@ namespace ClassicVCom_Nova64
 	}
 
 	template <uint8_t region_flag_bitmask>
+	[[gnu::always_inline]]
 	inline bool HasRegionFlagSupport(CPU &cpu, Word_LE program_id, uint8_t region_id)
 	{
 		Program &CurrentProgram = cpu.ProgramVectorTable[program_id];

@@ -202,11 +202,11 @@ void ClassicVCom_Nova64::Renderer::SetResolution(uint16_t width, uint16_t height
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RG8UI, width, height, 0, GL_RG_INTEGER, GL_UNSIGNED_BYTE, nullptr);
 }
 
-void ClassicVCom_Nova64::Renderer::UpdatePaletteTableBuffer(uint8_t index, const PaletteTableBufferData &data)
+void ClassicVCom_Nova64::Renderer::UpdateColorIndexTableBuffer(uint8_t index, const ColorIndexTableBufferData &data)
 {
 	if (index < 8)
 	{
-		graphics_control_buffer.palette_table_buffer[index] = data;
+		graphics_control_buffer.color_index_table_buffer[index] = data;
 		if (CurrentUBOId != GraphicsControlBufferUBOId)
 		{
 			CurrentUBOId = GraphicsControlBufferUBOId;
@@ -216,10 +216,10 @@ void ClassicVCom_Nova64::Renderer::UpdatePaletteTableBuffer(uint8_t index, const
 	}
 }
 
-void ClassicVCom_Nova64::Renderer::UpdateFramebufferControl(uint8_t clear_color_index, uint8_t clear_color_palette_table)
+void ClassicVCom_Nova64::Renderer::UpdateFramebufferControl(uint8_t clear_color_index, uint8_t clear_color_index_table)
 {
 	framebuffer_control.clear_color_index = clear_color_index;
-	framebuffer_control.clear_color_palette_table = clear_color_palette_table;
+	framebuffer_control.clear_color_index_table = clear_color_index_table;
 	if (CurrentUBOId != FramebufferControlUBOId)
 	{
 		CurrentUBOId = FramebufferControlUBOId;

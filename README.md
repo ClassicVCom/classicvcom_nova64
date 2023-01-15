@@ -16,7 +16,7 @@ This is a very early build under heavy development.  Changes are bound to happen
 
 ## Requirements for Building
 - [CMake](https://www.cmake.org/download/) (at least 3.10)
-- [fmt](https://github.com/fmt)
+- [fmt](https://github.com/fmtlib/fmt)
 - [libmsbtfont](https://github.com/Bandock/libmsbtfont) (Requires at least 0.2.0, latest release recommended)
 - [SDL2](https://www.libsdl.org/download-2.0.php) (Latest stable development version should work fine)
 - [GLEW](http://glew.sourceforge.net) (If you're compiling with OpenGL 3.3 renderer support)
